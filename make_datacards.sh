@@ -5,8 +5,8 @@ cd ${CMSSW_BASE}/src/CombineHarvester/HTTSM2017
 rm -r output/*_smhtt
 
 
-MorphingSM2017 --input_folder_mt="Vienna/"  --input_folder_et="Vienna/"  --input_folder_tt="Vienna/"  --input_folder_em="DESY/"  --real_data=true --postfix="-ML" --embedding=true --classic_bbb=false  --auto_rebin=true   --stxs_signals=stxs_stage0 --categories=stxs_stage1  --era=2016  --output="2016_smhtt"
-MorphingSM2017 --input_folder_mt="Vienna/"  --input_folder_et="Vienna/"  --input_folder_tt="Vienna/"  --input_folder_em="DESY/"  --real_data=true --postfix="-ML" --embedding=true --classic_bbb=false  --auto_rebin=true   --stxs_signals=stxs_stage0 --categories=stxs_stage1  --era=2017  --output="2017_smhtt"
+MorphingSM2017 --input_folder_mt="Vienna/"  --input_folder_et="Vienna/"  --input_folder_tt="Vienna/"  --input_folder_em="KIT/"  --real_data=true --postfix="-ML" --embedding=true --classic_bbb=false  --auto_rebin=true   --stxs_signals=stxs_stage0 --categories=stxs_stage1  --era=2016  --output="2016_smhtt"
+MorphingSM2017 --input_folder_mt="Vienna/"  --input_folder_et="Vienna/"  --input_folder_tt="Vienna/"  --input_folder_em="KIT/"  --real_data=true --postfix="-ML" --embedding=true --classic_bbb=false  --auto_rebin=true   --stxs_signals=stxs_stage0 --categories=stxs_stage1  --era=2017  --output="2017_smhtt"
 
 
 rm output/*_smhtt/*/125/*_em_*
