@@ -6,7 +6,7 @@ cd ${CMSSW_BASE}/src/CombineHarvester/HTTSM2017
 
 
 # MorphingSM2017 --input_folder_mt="Test/"  --input_folder_et="Test/"  --input_folder_tt="Test/syst_full_sig/"  --input_folder_em="KIT/"  --channel="tt" --real_data=true --postfix="-m_vis" --embedding=true --classic_bbb=false  --auto_rebin=true   --stxs_signals=stxs_stage0 --categories=gof  --gof_category_name=tt_inclusive  --era=2016  --output="2016_smhtt"
-MorphingSM2017 --verbose="true"  --input_folder_mt="Test/"  --input_folder_et="Test/"  --input_folder_tt="Test/syst_full_sig"  --input_folder_em="KIT/"  --channel="tt"  --real_data=true --postfix="-m_vis" --embedding=true --classic_bbb=false  --auto_rebin=true   --stxs_signals=stxs_stage0 --categories=gof  --gof_category_name=tt_inclusive  --era=2017  --output="2017_smhtt"
+MorphingSM2017 --verbose="true"  --input_folder_mt="Test/nn_syst/4cat_bias_int/"  --input_folder_et="Test/nn_syst/4cat_bias_int/"  --input_folder_tt="Test/nn_syst/4cat_bias_int/"  --input_folder_em="KIT/"  --channel="tt"  --real_data=true --postfix="-m_vis" --embedding=true --classic_bbb=false  --auto_rebin=true   --stxs_signals=stxs_stage0 --categories=gof  --gof_category_name=tt_inclusive  --era=2017  --output="2017_smhtt"
 
 
 # rm output/*_smhtt/*/125/*_em_*
