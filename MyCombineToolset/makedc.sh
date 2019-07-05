@@ -20,9 +20,11 @@ SHORTVARS="pt_1 pt_2"
 for ERA in 2017 ; do    
 	for VAR in ${SHORTVARS} ; do	
 		  
-		mkdir -p output/${ERA}_smhtt/${VAR}
+		
 		    
 	    for CHANNEL in tt ; do
+	    
+	    	mkdir -p output/${ERA}_smhtt/${VAR}/${CHANNEL}
 	    
 		    MorphingSM2017 \
 			--base_path="$BASEPATH" \
@@ -38,20 +40,22 @@ for ERA in 2017 ; do
 			--categories="gof" \
 			--gof_category_name=${CHANNEL}_inclusive \
 			--era="$ERA" \
-			--output="${ERA}_smhtt/${VAR}" | tee MorphingSM2017.log
+			--output="${ERA}_smhtt/${VAR}/${CHANNEL}" | tee MorphingSM2017.log
 	    
-			cd output/${ERA}_smhtt/${VAR}/${CHANNEL}/125/
+			cd output/${ERA}_smhtt/${VAR}/${CHANNEL}/${CHANNEL}/125/
+			for FILE in *.txt ; do
+				sed -i '$s/$/\n * autoMCStats 0.0/' $FILE
+			done
+			cd -	
+			
+			cd output/${ERA}_smhtt/${VAR}/${CHANNEL}/cmb/125/
 			for FILE in *.txt ; do
 				sed -i '$s/$/\n * autoMCStats 0.0/' $FILE
 			done
 			cd -	
 		done 
 		
-		cd output/${ERA}_smhtt/${VAR}/cmb/125/
-		for FILE in *.txt ; do
-			sed -i '$s/$/\n * autoMCStats 0.0/' $FILE
-		done
-		cd -	
+		
 		
 	done
 done
