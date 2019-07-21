@@ -2,11 +2,12 @@
 
 VERBOSITY="true"
 BASEPATH="/afs/hephy.at/work/m/msajatovic/cms/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/shapes"
-INPUTFOLDER="Test/bin_syst_cats"
-POSTFIX="-m_vis"
+INPUTFOLDER="ms_v10/ms_predictions"
+POSTFIX="-pt_vis"
 CATEGORIES="gof"
 AUTO_REBIN="true"
 
+CHANNEL=et
 ERA=2017
 MASS=125
 TOYS=20
@@ -15,7 +16,7 @@ STATISTIC=saturated # or KS or AD
 
 
 if [ "$CATEGORIES" = "gof" ]; then
-    GOFCATEGORYPARAMETER="--gof_category_name=tt_inclusive"
+    GOFCATEGORYPARAMETER="--gof_category_name="$CHANNEL"_inclusive"
 else
     GOFCATEGORYPARAMETER=""
 fi

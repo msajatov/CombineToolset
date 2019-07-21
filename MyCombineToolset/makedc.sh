@@ -7,13 +7,13 @@ cd -
 rm -rf output
 
 BASEPATH="/afs/hephy.at/work/m/msajatovic/cms/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/shapes"
-INPUTFOLDER="syst/cc/dc"
+INPUTFOLDER="syst/nn/dc"
 
 MASS=125
 
-VARS="pt_1 pt_2 jpt_1 jpt_2 bpt_1 bpt_2 njets nbtag m_sv mt_1 pt_tt mjj jdeta m_vis dijetpt met eta_1 eta_2"
+VARS="pt_1 pt_2 jpt_1 jpt_2 bpt_1 bpt_2 njets nbtag m_sv mt_1 mt_2 pt_vis pt_tt mjj jdeta m_vis dijetpt met eta_1 eta_2"
 
-SHORTVARS="pt_1 pt_2"
+SHORTVARS="pt_vis"
 
 
 
@@ -22,7 +22,7 @@ for ERA in 2017 ; do
 		  
 		
 		    
-	    for CHANNEL in tt ; do
+	    for CHANNEL in et; do
 	    
 	    	mkdir -p output/${ERA}_smhtt/${VAR}/${CHANNEL}
 	    

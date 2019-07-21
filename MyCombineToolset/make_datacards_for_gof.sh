@@ -8,8 +8,8 @@ rm -rf output
 MorphingSM2017 \
 --base_path="$BASEPATH" \
 --verbose="$VERBOSITY" \
---input_folder_tt="$INPUTFOLDER" \
---channel="tt"  \
+--input_folder_$CHANNEL="$INPUTFOLDER" \
+--channel="$CHANNEL"  \
 --real_data=true \
 --postfix="$POSTFIX" \
 --embedding=true \
@@ -21,7 +21,7 @@ $GOFCATEGORYPARAMETER \
 --era="$ERA" \
 --output="${ERA}_smhtt" | tee MorphingSM2017.log
 
-for ch in tt cmb
+for ch in $CHANNEL cmb
 do
 	cd output/${ERA}_smhtt/${ch}/125/
 	for FILE in *.txt
