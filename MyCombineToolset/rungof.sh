@@ -12,7 +12,7 @@ SHORTVARS="pt_vis"
 
 MASS=125
 TOYS=25
-NUM_THREADS=6
+NUM_THREADS=2
 STATISTIC=saturated # or KS or AD
 
 
@@ -21,9 +21,9 @@ BASEDIR=${PWD}
 
 
 for ERA in 2017 ; do    
-	for VAR in ${SHORTVARS} ; do			  
+	for VAR in ${VARS} ; do			  
 		    
-	    for CHANNEL in et; do
+	    for CHANNEL in et mt tt; do
 	        for ALGO in saturated KS AD; do
 	
 	            mkdir -p gof/${ERA}/${VAR}/${ALGO}/${CHANNEL}

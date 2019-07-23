@@ -7,7 +7,7 @@ cd -
 rm -rf output
 
 BASEPATH="/afs/hephy.at/work/m/msajatovic/cms/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/shapes"
-INPUTFOLDER="syst/nn/dc"
+INPUTFOLDER="dc/$1"
 
 MASS=125
 
@@ -18,11 +18,11 @@ SHORTVARS="pt_vis"
 
 
 for ERA in 2017 ; do    
-	for VAR in ${SHORTVARS} ; do	
+	for VAR in ${VARS} ; do	
 		  
 		
 		    
-	    for CHANNEL in et; do
+	    for CHANNEL in et mt tt; do
 	    
 	    	mkdir -p output/${ERA}_smhtt/${VAR}/${CHANNEL}
 	    
@@ -40,7 +40,7 @@ for ERA in 2017 ; do
 			--categories="gof" \
 			--gof_category_name=${CHANNEL}_inclusive \
 			--era="$ERA" \
-			--output="${ERA}_smhtt/${VAR}/${CHANNEL}" | tee MorphingSM2017.log
+			--output="${ERA}_smhtt/${VAR}/${CHANNEL}" | tee MorphingSM2017_${CHANNEL}_${VAR}.log
 	    
 			cd output/${ERA}_smhtt/${VAR}/${CHANNEL}/${CHANNEL}/125/
 			for FILE in *.txt ; do
