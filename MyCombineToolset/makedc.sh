@@ -1,12 +1,12 @@
 #! /bin/bash
 
-cd /afs/hephy.at/work/m/msajatovic/cms/CMSSW_8_1_0/src
+cd /afs/cern.ch/work/m/msajatov/private/cms/CMSSW_8_1_0/src
 eval `scramv1 runtime -sh`
 cd -
 
 rm -rf output
 
-BASEPATH="/afs/hephy.at/work/m/msajatovic/cms/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/shapes"
+BASEPATH="/afs/cern.ch/work/m/msajatov/private/cms/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/shapes"
 INPUTFOLDER="dc/$1"
 
 MASS=125

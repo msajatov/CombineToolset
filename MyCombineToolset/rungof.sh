@@ -1,6 +1,6 @@
 #! /bin/bash
 
-cd /afs/hephy.at/work/m/msajatovic/cms/CMSSW_8_1_0/src
+cd /afs/cern.ch/work/m/msajatov/private/cms/CMSSW_8_1_0/src
 eval `scramv1 runtime -sh`
 cd -
 
@@ -12,7 +12,7 @@ SHORTVARS="pt_vis"
 
 MASS=125
 TOYS=25
-NUM_THREADS=2
+NUM_THREADS=8
 STATISTIC=saturated # or KS or AD
 
 
