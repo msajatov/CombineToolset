@@ -32,16 +32,18 @@ for ERA in 2017 ; do
 	            #combineTool.py -M T2W -o ${PWD}/workspace.root -i ${BASEDIR}/output/${ERA}_smhtt/${VAR}/${CHANNEL}/${MASS}/
 	
 	            # Throw toys
-	            # combineTool.py -M GoodnessOfFit --algorithm $ALGO -m ${MASS} --there -d ${PWD}/workspace.root -n ".$ALGO.toys" -t 20 -s 1220:1269:1 --verbose 0 --rMin -5 --rMax 5 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0
+	            # combineTool.py -M GoodnessOfFit --algorithm $ALGO -m ${MASS} --there -d ${PWD}/workspace.root \
+	            # -n ".$ALGO.toys" -t 20 -s 1220:1269:1 --verbose 0 --rMin -5 --rMax 5 --X-rtd FITTER_NEW_CROSSING_ALGO \
+	            # --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0
 	            
 	            
 	            
 	            combineTool.py -M T2W -o ${PWD}/${ERA}_workspace.root -i ${BASEDIR}/output/${ERA}_smhtt/${VAR}/${CHANNEL}/cmb/${MASS} --parallel $NUM_THREADS | tee workspace.log
 	            
-	            combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS -d ${PWD}/${ERA}_workspace.root \
-		        -n ".$ALGO.data" \
-		        --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
-		        --plots | tee gof_for_data.log
+	            #combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS -d ${PWD}/${ERA}_workspace.root \
+		        #-n ".$ALGO.data" \
+		        #--X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
+		        #--plots | tee gof_for_data.log
 		        
 		        combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS --there -d ${PWD}/${ERA}_workspace.root \
 		         -n ".$ALGO.toys" \

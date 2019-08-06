@@ -7,7 +7,7 @@ cd -
 rm -rf output
 
 BASEPATH="/afs/cern.ch/work/m/msajatov/private/cms/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/shapes"
-INPUTFOLDER="dc/$1"
+INPUTFOLDER="emb_dc/$1"
 
 MASS=125
 
@@ -33,7 +33,7 @@ for ERA in 2017 ; do
 			--channel="$CHANNEL"  \
 			--real_data=true \
 			--postfix="-${VAR}" \
-			--embedding=true \
+			--embedding=false \
 			--classic_bbb=false \
 			--auto_rebin=false \
 			--stxs_signals=stxs_stage0 \
