@@ -1,0 +1,1 @@
+combineTool.py -M GoodnessOfFit --algo=saturated -m 125 -d ${PWD}/2017_workspace.root -n ".saturated.data" --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 --plots | tee gof_for_data.log

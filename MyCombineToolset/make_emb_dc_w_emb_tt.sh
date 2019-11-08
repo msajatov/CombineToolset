@@ -22,7 +22,7 @@ for ERA in 2017 ; do
 		  
 		
 		    
-	    for CHANNEL in et mt; do
+	    for CHANNEL in tt; do
 	    
 	    	mkdir -p output/${ERA}_smhtt/${VAR}/${CHANNEL}
 	    

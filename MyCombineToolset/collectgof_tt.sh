@@ -23,7 +23,7 @@ BASEDIR=${PWD}
 for ERA in 2017 ; do    
 	for VAR in ${VARS} ; do			  
 		    
-	    for CHANNEL in et mt tt; do
+	    for CHANNEL in tt; do
 	        for ALGO in saturated KS AD; do
 	
 	            mkdir -p gof/${ERA}/${VAR}/${ALGO}/${CHANNEL}

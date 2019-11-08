@@ -23,11 +23,11 @@ BASEDIR=${PWD}
 for ERA in 2017 ; do    
 	for VAR in ${VARS} ; do			  
 		    
-	    for CHANNEL in et mt; do
+	    for CHANNEL in tt; do
 	        for ALGO in saturated KS AD; do
 	
-	            mkdir -p gof/${ERA}/${VAR}/${ALGO}/${CHANNEL}
-	            cd gof/${ERA}/${VAR}/${ALGO}/${CHANNEL}
+	            mkdir -p fit/${ERA}/${VAR}/${ALGO}/${CHANNEL}
+	            cd fit/${ERA}/${VAR}/${ALGO}/${CHANNEL}
 	
 	            #combineTool.py -M T2W -o ${PWD}/workspace.root -i ${BASEDIR}/output/${ERA}_smhtt/${VAR}/${CHANNEL}/${MASS}/
 	
@@ -38,18 +38,6 @@ for ERA in 2017 ; do
 	            
 	            combineTool.py -M T2W -o ${PWD}/${ERA}_workspace.root -i ${BASEDIR}/output/${ERA}_smhtt/${VAR}/${CHANNEL}/cmb/${MASS} --parallel $NUM_THREADS | tee workspace.log
 	            
-	            combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS -d ${PWD}/${ERA}_workspace.root \
-		        -n ".$ALGO.data" \
-		        --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
-		        --plots | tee gof_for_data.log
-		        
-		        combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS --there -d ${PWD}/${ERA}_workspace.root \
-		         -n ".$ALGO.toys" \
-		         -s 1230:1249:1 -t $TOYS \
-		         --parallel $NUM_THREADS \
-		         --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
-		         --job-mode "condor" | tee gof_for_toys.log
-		        
 	            cd ${BASEDIR}
 	        done
     	done		
