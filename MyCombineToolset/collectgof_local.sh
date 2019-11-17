@@ -7,7 +7,7 @@ cd -
 
 VARS="pt_1 pt_2 jpt_1 jpt_2 bpt_1 bpt_2 njets nbtag m_sv mt_1 mt_2 pt_vis pt_tt mjj jdeta m_vis dijetpt met eta_1 eta_2"
 
-SHORTVARS="dijetpt"
+SHORTVARS="mt_2"
 
 
 MASS=125
@@ -21,13 +21,15 @@ BASEDIR=${PWD}
 
 
 for ERA in 2017 ; do    
-	for VAR in ${VARS} ; do			  
+	for VAR in ${SHORTVARS} ; do			  
 		    
-	    for CHANNEL in tt; do
-	        for ALGO in saturated KS AD; do
+	    for CHANNEL in et; do
+	        for ALGO in KS; do
 	
 	            mkdir -p gof/${ERA}/${VAR}/${ALGO}/${CHANNEL}
 	            cd gof/${ERA}/${VAR}/${ALGO}/${CHANNEL}	
+	            
+	            
 	            
 	            combine -M FitDiagnostics -m $MASS -d ${PWD}/${ERA}_workspace.root -n $ERA \
 	            --X-rtd MINIMIZER_analytic --X-rtd FITTER_NEW_CROSSING_ALGO --cminDefaultMinimizerStrategy 0 \

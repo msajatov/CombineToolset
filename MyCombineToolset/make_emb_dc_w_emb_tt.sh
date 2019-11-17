@@ -1,6 +1,6 @@
 #! /bin/bash
 
-cd /afs/cern.ch/work/m/msajatov/private/cms/CMSSW_8_1_0/src
+cd /afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src
 eval `scramv1 runtime -sh`
 cd -
 

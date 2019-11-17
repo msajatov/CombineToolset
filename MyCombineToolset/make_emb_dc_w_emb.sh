@@ -1,6 +1,6 @@
 #! /bin/bash
 
-cd /afs/cern.ch/work/m/msajatov/private/cms/CMSSW_8_1_0/src
+cd /afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src
 eval `scramv1 runtime -sh`
 cd -
 
@@ -22,7 +22,7 @@ for ERA in 2017 ; do
 		  
 		
 		    
-	    for CHANNEL in et mt; do
+	    for CHANNEL in et mt tt; do
 	    
 	    	mkdir -p output/${ERA}_smhtt/${VAR}/${CHANNEL}
 	    
