@@ -4,8 +4,8 @@ cd /afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src
 eval `scramv1 runtime -sh`
 cd -
 
-CHANNEL=mt
-VAR=pt_2
+CHANNEL=tt
+VAR=jpt_1
 ALGO=saturated
 ERA=2017
 
@@ -31,7 +31,7 @@ PostFitShapesFromWorkspace -m 125 -w ${PWD}/${ERA}_workspace.root \
  -d ${BASEDIR}/output/${ERA}_smhtt/${VAR}/${CHANNEL}/cmb/${MASS}/combined.txt.cmb \
  -o ${ERA}_datacard_shapes_prefit.root | tee postfitshapes_prefit.log
 	            
-combine -M FitDiagnostics -m 125 -d ${PWD}/${ERA}_workspace.root -n $ERA \
+combine -M FitDiagnostics -m 125 -d ${PWD}/${ERA}_workspace.root -n $ERA --robustFit=1 \
  -v 2 | tee postfitshapes_fit.log
 
 PostFitShapesFromWorkspace --postfit -m 125 -w ${PWD}/${ERA}_workspace.root --skip-prefit \

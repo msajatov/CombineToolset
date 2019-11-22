@@ -5,8 +5,6 @@ eval `scramv1 runtime -sh`
 cd -
 
 
-CH=$1
-
 VARS="pt_1 pt_2 jpt_1 jpt_2 bpt_1 bpt_2 njets nbtag m_sv mt_1 mt_2 pt_vis pt_tt mjj jdeta m_vis dijetpt met eta_1 eta_2"
 
 SHORTVARS="mt_2"
@@ -14,7 +12,7 @@ SHORTVARS="mt_2"
 
 MASS=125
 TOYS=25
-NUM_THREADS=4
+NUM_THREADS=8
 STATISTIC=saturated # or KS or AD
 
 
@@ -25,7 +23,7 @@ BASEDIR=${PWD}
 for ERA in 2017 ; do    
 	for VAR in ${VARS} ; do			  
 		    
-	    for CHANNEL in $CH; do
+	    for CHANNEL in et mt tt; do
 	        for ALGO in saturated; do
 	
 	            mkdir -p gof/${ERA}/${VAR}/${ALGO}/${CHANNEL}
@@ -83,7 +81,7 @@ for ERA in 2017 ; do
 	        done
     	done
     	
-    	for CHANNEL in $CH; do
+    	for CHANNEL in et mt tt; do
 	        for ALGO in KS AD; do
 	
 	            mkdir -p gof/${ERA}/${VAR}/${ALGO}/${CHANNEL}

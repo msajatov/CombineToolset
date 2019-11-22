@@ -4,10 +4,10 @@ cd /afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src
 eval `scramv1 runtime -sh`
 cd -
 
-CHANNEL=mt
-VAR=pt_2
+CHANNEL=et
+VAR=$2
 
-BASEPATH="/afs/cern.ch/work/m/msajatov/private/cms/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/shapes"
+BASEPATH="/afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/shapes"
 INPUTFOLDER="emb_dc/$1"
 
 MASS=125

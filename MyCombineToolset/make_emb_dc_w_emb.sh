@@ -6,7 +6,7 @@ cd -
 
 rm -rf output
 
-BASEPATH="/afs/cern.ch/work/m/msajatov/private/cms/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/shapes"
+BASEPATH="/afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/shapes"
 INPUTFOLDER="emb_dc/$1"
 
 MASS=125
@@ -40,7 +40,7 @@ for ERA in 2017 ; do
 			--categories="gof" \
 			--gof_category_name=${CHANNEL}_inclusive \
 			--era="$ERA" \
-			--output="${ERA}_smhtt/${VAR}/${CHANNEL}" | tee MorphingSM2017_${CHANNEL}_${VAR}.log
+			--output="${ERA}_smhtt/${VAR}/${CHANNEL}" |& tee MorphingSM2017_${CHANNEL}_${VAR}.log
 	    
 			cd output/${ERA}_smhtt/${VAR}/${CHANNEL}/${CHANNEL}/125/
 			for FILE in *.txt ; do

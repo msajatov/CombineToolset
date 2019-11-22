@@ -4,11 +4,11 @@ cd /afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src
 eval `scramv1 runtime -sh`
 cd -
 
-CHANNEL=mt
-VAR=dijetpt
+CHANNEL=tt
+VAR=nbtag
 ALGO=saturated
-RMIN=-5
-RMAX=5
+RMIN=-1
+RMAX=10
 ERA=2017
 
 
@@ -33,8 +33,7 @@ PostFitShapesFromWorkspace -m 125 -w ${PWD}/${ERA}_workspace.root \
  -d ${BASEDIR}/output/${ERA}_smhtt/${VAR}/${CHANNEL}/cmb/${MASS}/combined.txt.cmb \
  -o ${ERA}_datacard_shapes_prefit.root | tee postfitshapes_prefit.log
 	            
-combine -M FitDiagnostics -m 125 -d ${PWD}/${ERA}_workspace.root -n $ERA \
-  --cminDefaultMinimizerStrategy 0 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd MINIMIZER_analytic \
+combine -M FitDiagnostics -m 125 -d ${PWD}/${ERA}_workspace.root -n $ERA --robustFit=1 \
   --rMin $RMIN --rMax $RMAX -v 2 | tee postfitshapes_fit.log
 
 PostFitShapesFromWorkspace --postfit -m 125 -w ${PWD}/${ERA}_workspace.root --skip-prefit \
@@ -53,12 +52,10 @@ python /afs/cern.ch/work/m/msajatov/private/CMSSW_9_4_0/src/dev/utility/scripts/
 
 
 combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS -d ${PWD}/${ERA}_workspace.root -n ".$ALGO.data" \
- --cminDefaultMinimizerStrategy 0 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd MINIMIZER_analytic \
  --rMin $RMIN --rMax $RMAX --plots -v 3 | tee gof_for_data.log
 
 combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS --there -d ${PWD}/${ERA}_workspace.root \
  -n ".$ALGO.toys" --rMin $RMIN --rMax $RMAX \
- --cminDefaultMinimizerStrategy 0 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd MINIMIZER_analytic \
  -s 1230:1249:1 -t $TOYS \
  --parallel ${NUM_THREADS} -v 0 | tee gof_for_toys.log
  
