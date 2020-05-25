@@ -4,9 +4,11 @@ cd /afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src
 eval `scramv1 runtime -sh`
 cd -
 
-CHANNEL=tt
-VAR=jpt_1
+CHANNEL=et
+VAR=m_vis
 ALGO=saturated
+RMIN=0
+RMAX=3
 ERA=2017
 
 
@@ -20,7 +22,7 @@ BASEDIR=${PWD}
 	
 mkdir -p new
 
-cp /afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/CombineToolset/MyCombineToolset/fitdiag_default.sh new
+cp -a /afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/CombineToolset/MyCombineToolset/fitdiag.sh new
 cd new
 
 
@@ -32,7 +34,7 @@ PostFitShapesFromWorkspace -m 125 -w ${PWD}/${ERA}_workspace.root \
  -o ${ERA}_datacard_shapes_prefit.root | tee postfitshapes_prefit.log
 	            
 combine -M FitDiagnostics -m 125 -d ${PWD}/${ERA}_workspace.root -n $ERA \
- -v 2 --cminDefaultMinimizerStrategy 2 | tee postfitshapes_fit.log
+  --setParameters r=1 --preFitValue 1 --freezeParameters rgx{.+} -v 2 | tee postfitshapes_fit.log
 
 PostFitShapesFromWorkspace --postfit -m 125 -w ${PWD}/${ERA}_workspace.root --skip-prefit \
  -d ${BASEDIR}/output/${ERA}_smhtt/${VAR}/${CHANNEL}/cmb/${MASS}/combined.txt.cmb \
@@ -49,12 +51,13 @@ python /afs/cern.ch/work/m/msajatov/private/CMSSW_9_4_0/src/dev/utility/scripts/
  -i ${ERA}_datacard_shapes_postfit_sb.root -m $MASS -v $VAR -p png -s 0 -l 0
 
 
-combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS -d ${PWD}/${ERA}_workspace.root -n ".$ALGO.data" \
- --plots -v 3 --cminDefaultMinimizerStrategy 2 | tee gof_for_data.log
 
+
+combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS -d ${PWD}/${ERA}_workspace.root -n ".$ALGO.data" \
+ --setParameters r=1 --freezeParameters rgx{.+} --plots -v 3 | tee gof_for_data.log
 
 combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS --there -d ${PWD}/${ERA}_workspace.root \
- -n ".$ALGO.toys" --cminDefaultMinimizerStrategy 2 \
+ -n ".$ALGO.toys" --setParameters r=1 --freezeParameters rgx{.+} \
  -s 1230:1249:1 -t $TOYS \
  --parallel ${NUM_THREADS} -v 0 | tee gof_for_toys.log
  

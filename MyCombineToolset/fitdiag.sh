@@ -4,11 +4,11 @@ cd /afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src
 eval `scramv1 runtime -sh`
 cd -
 
-CHANNEL=tt
-VAR=nbtag
+CHANNEL=et
+VAR=jdeta
 ALGO=saturated
-RMIN=-1
-RMAX=10
+RMIN=0
+RMAX=3
 ERA=2017
 
 
@@ -33,7 +33,7 @@ PostFitShapesFromWorkspace -m 125 -w ${PWD}/${ERA}_workspace.root \
  -d ${BASEDIR}/output/${ERA}_smhtt/${VAR}/${CHANNEL}/cmb/${MASS}/combined.txt.cmb \
  -o ${ERA}_datacard_shapes_prefit.root | tee postfitshapes_prefit.log
 	            
-combine -M FitDiagnostics -m 125 -d ${PWD}/${ERA}_workspace.root -n $ERA --robustFit=1 \
+combine -M FitDiagnostics -m 125 -d ${PWD}/${ERA}_workspace.root -n $ERA \
   --rMin $RMIN --rMax $RMAX -v 2 | tee postfitshapes_fit.log
 
 PostFitShapesFromWorkspace --postfit -m 125 -w ${PWD}/${ERA}_workspace.root --skip-prefit \
@@ -52,7 +52,7 @@ python /afs/cern.ch/work/m/msajatov/private/CMSSW_9_4_0/src/dev/utility/scripts/
 
 
 combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS -d ${PWD}/${ERA}_workspace.root -n ".$ALGO.data" \
- --rMin $RMIN --rMax $RMAX --plots -v 3 | tee gof_for_data.log
+ --rMin $RMIN --rMax $RMAX --setParameters r=1 --plots -v 3 | tee gof_for_data.log
 
 combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS --there -d ${PWD}/${ERA}_workspace.root \
  -n ".$ALGO.toys" --rMin $RMIN --rMax $RMAX \

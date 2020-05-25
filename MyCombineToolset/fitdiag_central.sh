@@ -4,24 +4,31 @@ cd /afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src
 eval `scramv1 runtime -sh`
 cd -
 
-CHANNEL=tt
-VAR=jpt_1
-ALGO=saturated
+
+
+CHANNEL=$1
+VAR=$2
+CONF=$3
+NAME=$4
+
+ALGO=KS
+RMIN=0
+RMAX=5
 ERA=2017
+
 
 
 MASS=125
 TOYS=25
 NUM_THREADS=8
-STATISTIC=saturated # or KS or AD
 
 
-BASEDIR=${PWD}
+BASEDIR="${PWD}/../../datacards/${CONF}"
 	
-mkdir -p new
+mkdir -p $NAME
 
-cp /afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/CombineToolset/MyCombineToolset/fitdiag_default.sh new
-cd new
+cp -a /afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/CombineToolset/MyCombineToolset/fitdiag.sh $NAME
+cd $NAME
 
 
 combineTool.py -M T2W -o ${PWD}/${ERA}_workspace.root -i ${BASEDIR}/output/${ERA}_smhtt/${VAR}/${CHANNEL}/cmb/${MASS} | tee workspace.log
@@ -32,7 +39,7 @@ PostFitShapesFromWorkspace -m 125 -w ${PWD}/${ERA}_workspace.root \
  -o ${ERA}_datacard_shapes_prefit.root | tee postfitshapes_prefit.log
 	            
 combine -M FitDiagnostics -m 125 -d ${PWD}/${ERA}_workspace.root -n $ERA \
- -v 2 --cminDefaultMinimizerStrategy 2 | tee postfitshapes_fit.log
+  --rMin $RMIN --rMax $RMAX -v 2 | tee postfitshapes_fit.log
 
 PostFitShapesFromWorkspace --postfit -m 125 -w ${PWD}/${ERA}_workspace.root --skip-prefit \
  -d ${BASEDIR}/output/${ERA}_smhtt/${VAR}/${CHANNEL}/cmb/${MASS}/combined.txt.cmb \
@@ -50,11 +57,10 @@ python /afs/cern.ch/work/m/msajatov/private/CMSSW_9_4_0/src/dev/utility/scripts/
 
 
 combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS -d ${PWD}/${ERA}_workspace.root -n ".$ALGO.data" \
- --plots -v 3 --cminDefaultMinimizerStrategy 2 | tee gof_for_data.log
-
+ --rMin $RMIN --rMax $RMAX --setParameters r=1 --plots -v 3 | tee gof_for_data.log
 
 combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS --there -d ${PWD}/${ERA}_workspace.root \
- -n ".$ALGO.toys" --cminDefaultMinimizerStrategy 2 \
+ -n ".$ALGO.toys" --rMin $RMIN --rMax $RMAX \
  -s 1230:1249:1 -t $TOYS \
  --parallel ${NUM_THREADS} -v 0 | tee gof_for_toys.log
  
