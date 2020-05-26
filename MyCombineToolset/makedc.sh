@@ -1,19 +1,19 @@
 #! /bin/bash
 
-cd /afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src
+cd /afs/cern.ch/work/m/msajatov/private/cms3/CMSSW_8_1_0/src
 eval `scramv1 runtime -sh`
 cd -
 
 rm -rf output
 
-BASEPATH="/afs/cern.ch/work/m/msajatov/private/cms2/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/shapes"
+BASEPATH="/afs/cern.ch/work/m/msajatov/private/cms3/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/shapes"
 INPUTFOLDER="emb_dc/$1"
 
 MASS=125
 
 VARS="pt_1 pt_2 jpt_1 jpt_2 bpt_1 bpt_2 njets nbtag m_sv mt_1 mt_2 pt_vis pt_tt mjj jdeta m_vis dijetpt met eta_1 eta_2"
 
-SHORTVARS="pt_vis"
+SHORTVARS="m_sv"
 
 
 
