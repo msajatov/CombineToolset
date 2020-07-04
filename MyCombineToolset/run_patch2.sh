@@ -19,7 +19,7 @@ NUM_THREADS=1
 
 
 mkdir -p gof/${ERA}/${VAR}/${ALGO}/${CHANNEL}	            
-cp /afs/cern.ch/work/m/msajatov/private/cms3/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/CombineToolset/MyCombineToolset/run_with_arguments.sh gof/${ERA}/${VAR}/${ALGO}/${CHANNEL}
+cp /afs/cern.ch/work/m/msajatov/private/cms3/CMSSW_8_1_0/src/CombineHarvester/HTTSM2017/CombineToolset/MyCombineToolset/run_patch1.sh gof/${ERA}/${VAR}/${ALGO}/${CHANNEL}
 cd gof/${ERA}/${VAR}/${ALGO}/${CHANNEL}
 
 combineTool.py -M T2W -o ${PWD}/${ERA}_workspace.root -i ${BASEDIR}/output/${ERA}_smhtt/${VAR}/${CHANNEL}/cmb/${MASS} |& tee workspace.log
@@ -30,6 +30,7 @@ if [ ${ALGO} == saturated ]; then
         -o ${ERA}_datacard_shapes_prefit.root |& tee postfitshapes_prefit.log
                     
     combine -M FitDiagnostics -m 125 -d ${PWD}/${ERA}_workspace.root -n $ERA \
+    --rMin 0 --rMax 10 --preFitValue 5 \
         -v 2 |& tee postfitshapes_fit.log
 
     PostFitShapesFromWorkspace --postfit -m 125 -w ${PWD}/${ERA}_workspace.root --skip-prefit \
@@ -48,9 +49,11 @@ if [ ${ALGO} == saturated ]; then
 fi
 
 combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS -d ${PWD}/${ERA}_workspace.root -n ".$ALGO.data" \
+--rMin 0 --rMax 10 --setParameters r=5 \
     --plots -v 3 |& tee gof_for_data.log
 
 combineTool.py -M GoodnessOfFit --algo=${ALGO} -m $MASS --there -d ${PWD}/${ERA}_workspace.root \
+--rMin 0 --rMax 10 --setParameters r=5 \
     -n ".$ALGO.toys"  \
     -s 1230:1249:1 -t $TOYS \
     --parallel ${NUM_THREADS} -v 0 |& tee gof_for_toys.log

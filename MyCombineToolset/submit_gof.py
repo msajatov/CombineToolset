@@ -7,7 +7,7 @@ import subprocess
 import time
 import shutil
 
-jobflavour = "espresso"
+jobflavour = "workday"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -15,6 +15,8 @@ def main():
     parser.add_argument('-e', dest='era', help='Era',required = True )    
     parser.add_argument('--vars', dest='vars', nargs="*", help='Variable', default=[])
     parser.add_argument('--algos', dest='algos', nargs="*", help="Algorithm", default=["saturated", "KS", "AD"])
+    parser.add_argument('--seeds', dest='seeds', help="Seeds", action="store_true")
+    parser.add_argument('--patch', dest='patch', help='Patch')    
     
     args = parser.parse_args()    
     
@@ -25,7 +27,7 @@ def main():
 
     if not args.vars:
         variables = ["pt_1","pt_2","jpt_1","jpt_2","bpt_1","bpt_2","njets","nbtag","m_sv","mt_1",
-                    "mt_2","pt_vis","pt_tt","mjj","jdeta","m_vis","dijetpt","met","eta_1","eta_2"]
+                    "mt_2","pt_vis","pt_tt","mjj","jdeta","m_vis","dijetpt","met"]
 #         variables = ["pt_1","pt_2"]
     else:
         variables = args.vars
@@ -38,7 +40,7 @@ def main():
     timestamp = time.time()
     exeFileName = "{0}_gof_exe.sh".format(timestamp)
     
-    createShFile(exeFileName, variables, algos)
+    createShFile(exeFileName, variables, algos, args.seeds, args.patch)
     
     subFileName = subBaseFileName.format(channel, era)
     createSubFile(subFileName, exeFileName, channel, era, variables)
@@ -79,7 +81,7 @@ def createSubFile(subFileName, executableFileName, channel, era, vars):
     
     writeToFile(subFileName, content)
 
-def createShFile(executableFileName, vars, algos):    
+def createShFile(executableFileName, vars, algos, seeds, patch):    
     # header = makeHeader()
     # content = copy.deepcopy(header)
     # #command = "python produce.py -c {1} -e {2} {3} --syst --fake_est nn --prefix {0}_ -o emb_dc/{0} |& tee emb_dc/{0}/{1}_{3}.log".format(mode, channel, era, var)
@@ -98,14 +100,29 @@ def createShFile(executableFileName, vars, algos):
     
     # writeToFile(executableFileName, content)
 
+    seed_list = ["1230:1249:1", "1250:1269:1", "1270:1289:1", "1290:1309:1", "1310:1329:1", 
+                "1330:1349:1", "1350:1369:1", "1370:1389:1", "1390:1409:1", "1410:1429:1", 
+                "1430:1449:1", "1450:1469:1", "1470:1489:1", "1490:1509:1", "1510:1529:1", 
+                "1530:1549:1", "1550:1569:1", "1570:1589:1", "1590:1609:1", "1610:1629:1"]
+
+    
+
     header = makeHeader()
     content = copy.deepcopy(header)
     
     for i, var in enumerate(vars):
         content = appendLine(content, "if [ $3 -eq {0} ]; then".format(i))
         for algo in algos:
-            command = "time sh run_with_arguments.sh $1 $2 {0} {1}".format(var, algo)
-            content = appendLine(content, command)
+            if seeds:
+                seedstring = ""
+                for seed in seed_list:
+                    seedstring += seed + " "
+                command = "time sh seed_wrapper.sh $1 $2 {0} {1} {2}".format(var, algo, seedstring)
+            elif patch:
+                command = "time sh run_patch{2}.sh $1 $2 {0} {1}".format(var, algo, patch)
+            else:
+                command = "time sh run_with_arguments.sh $1 $2 {0} {1}".format(var, algo)
+        content = appendLine(content, command)
         content = appendLine(content, "fi")
         
     print "content is"
